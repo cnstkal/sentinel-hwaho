@@ -74,7 +74,14 @@ window.APPS = {
     openApp(id) {
       if (id === "sentinel-site") {
         const win = document.getElementById("sentinel-site-window");
-        if (win) { win.style.display = "block"; win.querySelector("iframe")?.contentWindow?.location?.reload(); }
+        if (win) {
+          win.classList.remove("hwaho-launching");
+          win.style.display = "block";
+          void win.offsetWidth;
+          win.classList.add("hwaho-launching");
+          win.addEventListener("animationend", () => win.classList.remove("hwaho-launching"), { once: true });
+          win.querySelector("iframe")?.contentWindow?.location?.reload();
+        }
         Home.current = id;
         try { localStorage.setItem(HOME_STATE_KEY, id); } catch (_) {}
         return;
