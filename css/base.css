@@ -1176,20 +1176,24 @@ position:absolute;inset:0;z-index:8;overflow:hidden;background:var(--bg);color:v
 .grid{row-gap:clamp(12px,2.2vh,18px)}
 
 
-/* ===== 데스크톱 100% 화면 축소: 우측 잘림 방지 ===== */
+/* ===== Desktop app content scale: keep the full viewport visible ===== */
 @media (min-width:520px) and (min-height:600px){
-  #screen > [id$="-app"]{
-    zoom:1 !important;
-    transform:scale(.92);
-    transform-origin:top left;
-    width:108.6957%;
-    height:108.6957%;
+  #screen > #cam-app,
+  #screen > #pho-app,
+  #screen > #saf-app,
+  #screen > #kko-app,
+  #screen > #ig-app,
+  #screen > #x-app,
+  #screen > #nt-app,
+  #screen > #yt-app {
+    zoom: .92 !important;
+    width: 108.6957% !important;
+    height: 108.6957% !important;
+    transform: none !important;
   }
-  #statusbar{
-    zoom:1 !important;
-    transform:scale(.92);
-    transform-origin:top left;
-    width:108.6957%;
-    right:auto;
+  #screen > #statusbar {
+    zoom: .92 !important;
+    width: 108.6957% !important;
+    transform: none !important;
   }
 }
