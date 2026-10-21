@@ -1,0 +1,56 @@
+{
+  "updatedAt": "2026-10-04T00:00:00+09:00",
+  "updatedAtDisplay": "2026.10.04 00:00",
+  "source": "공식 재난안전데이터 연계 준비 데이터",
+  "nationalWarning": {
+    "level": "주의",
+    "title": "전국 위기경보",
+    "issuedAtDisplay": "2026.09.30 01:42"
+  },
+  "regionalAlerts": [
+    {
+      "region": "서울특별시",
+      "level": "주의",
+      "title": "도심 일부 지역 안전확인 안내",
+      "issuedAt": "2026-09-29T18:20:00+09:00",
+      "issuedAtDisplay": "2026.09.29 18:20"
+    },
+    {
+      "region": "인천광역시",
+      "level": "관심",
+      "title": "항만 인근 안전확인 안내",
+      "issuedAt": "2026-09-25T14:33:00+09:00",
+      "issuedAtDisplay": "2026.09.25 14:33"
+    },
+    {
+      "region": "경기도",
+      "level": "관심",
+      "title": "공공시설 주변 안전확인 안내",
+      "issuedAt": "2026-09-27T21:05:00+09:00",
+      "issuedAtDisplay": "2026.09.27 21:05"
+    }
+  ],
+  "history": [
+    {
+      "region": "서울특별시",
+      "level": "주의",
+      "title": "도심 일부 지역 안전확인 안내",
+      "issuedAt": "2026-09-29T18:20:00+09:00",
+      "issuedAtDisplay": "2026.09.29 18:20"
+    },
+    {
+      "region": "경기도",
+      "level": "관심",
+      "title": "공공시설 주변 안전확인 안내",
+      "issuedAt": "2026-09-27T21:05:00+09:00",
+      "issuedAtDisplay": "2026.09.27 21:05"
+    },
+    {
+      "region": "인천광역시",
+      "level": "관심",
+      "title": "항만 인근 안전확인 안내",
+      "issuedAt": "2026-09-25T14:33:00+09:00",
+      "issuedAtDisplay": "2026.09.25 14:33"
+    }
+  ]
+}
