@@ -373,6 +373,16 @@ const adm=()=>document.body.classList.contains('photo-admin');
 let M=null,tm;
 const SF=[['name','이름'],['age','나이'],['gender','성별'],['center','소속 센터'],['grade','등급'],['type','능력 유형'],['status','등록 상태'],['joined','등록일']],
 AF=[['code','괴수 코드'],['grade','등급'],['type','능력 유형'],['st','관리 상태'],['joined','최초 등록일'],['special','특이 구분']];
+const DEFAULT_S=[
+ {p:{name:'박성화',age:'29세',gender:'남성',center:'서울권역지원센터',grade:'S급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'김홍중',age:'29세',gender:'남성',center:'서울권역지원센터',grade:'S급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'정윤호',age:'28세',gender:'남성',center:'서울권역지원센터',grade:'A급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'강여상',age:'28세',gender:'남성',center:'서울권역지원센터',grade:'A급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'최산',age:'28세',gender:'남성',center:'서울권역지원센터',grade:'A급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'송민기',age:'28세',gender:'남성',center:'서울권역지원센터',grade:'A급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'정우영',age:'28세',gender:'남성',center:'서울권역지원센터',grade:'A급',type:'미상',status:'등록·운용',joined:'-'},img:''},
+ {p:{name:'최종호',age:'27세',gender:'남성',center:'서울권역지원센터',grade:'A급',type:'미상',status:'등록·운용',joined:'-'},img:''}
+];
 const DEFAULT_A=[
  {code:'에너지형 괴수',grade:'1등급',type:'고출력 전격·에너지 방출형',st:'희귀',joined:'2011.06.17',special:'고출력 전격'},
  {code:'인지·감각형 괴수',grade:'2등급',type:'감각 교란·인지 간섭형',st:'관찰',joined:'2006.04.22',special:'인지 간섭'},
@@ -395,7 +405,16 @@ function render(){window.__ssaOwned=true;const S=$('.sentinel-list'),A=$('.apost
 async function upload(){const id='ssa-lists-'+Date.now()+'.json',payload=JSON.stringify({v:3,M}),fd=new FormData();fd.append('file',new Blob([payload],{type:'application/json'}),id);fd.append('upload_preset','Everything');fd.append('public_id',id);fd.append('folder','sentinel-config');fd.append('tags',TAG);try{const r=await fetch(RAPI,{method:'POST',body:fd}),j=await r.json();if(!r.ok||!j.public_id)throw new Error(j.error?.message||r.status);pending=false;toast('저장되었습니다. 모든 접속자에게 반영됩니다.')}catch(e){toast('공유 설정 저장 실패: '+e.message+' (다시 시도합니다)',1);setTimeout(upload,3000)}}
 let pending=false;
 function persist(){pending=true;try{localStorage.setItem(LK,JSON.stringify(M))}catch(e){toast('저장 공간이 부족합니다.',1)}clearTimeout(tm);tm=setTimeout(upload,700)}
-function applyDefaultA(force=false){
+function applyDefaultS(force=false){
+  if(!M)return false;
+  if(!force && M._sentinelRosterVersion===1)return false;
+  const old=M.s||[];
+  const findImg=x=>old.find(o=>o&&o.p&&o.p.name===x.p.name&&o.img)?.img||'';
+  M.s=DEFAULT_S.map(x=>({...x,p:{...x.p},img:findImg(x)}));
+  M._sentinelRosterVersion=1;
+  return true;
+ }
+ function applyDefaultA(force=false){
  if(!M)return false;
  if(!force && M._defaultVersion===3)return false;
  const old=M.a||[];
@@ -443,7 +462,7 @@ let lastPull=0;
 async function pullRemote(force){
   if(pending&&!force)return false;
   let migrated=false;
-  if(!M){try{const c=JSON.parse(localStorage.getItem(LK)||'null');if(c&&c.s){M=c;migrated=applyDefaultA();render()}}catch(e){}}
+  if(!M){try{const c=JSON.parse(localStorage.getItem(LK)||'null');if(c&&c.s){M=c;migrated=applyDefaultS()||applyDefaultA();render()}}catch(e){}}
   try{
    const r=await fetch(LIST+'?_='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;
    const j=await r.json(),a=(j.resources||[]).sort((x,y)=>(y.version||0)-(x.version||0))[0];if(!a)throw 0;
@@ -451,7 +470,7 @@ async function pullRemote(force){
    if(p.M&&p.M.s){
     if(!force&&pending)return false;
     const changed=JSON.stringify(M)!==JSON.stringify(p.M);
-    M=p.M;migrated=applyDefaultA()||migrated;
+    M=p.M;migrated=applyDefaultS()||applyDefaultA()||migrated;
     if(changed||migrated)render();
     try{localStorage.setItem(LK,JSON.stringify(M))}catch(e){}
    }
