@@ -1176,13 +1176,20 @@ position:absolute;inset:0;z-index:8;overflow:hidden;background:var(--bg);color:v
 .grid{row-gap:clamp(12px,2.2vh,18px)}
 
 
-/* ===== 개별 앱 화면 전체 크기 조정: 데스크톱 브라우저 100%에서 과하게 커 보이는 현상 완화 ===== */
+/* ===== 데스크톱 100% 화면 축소: 우측 잘림 방지 ===== */
 @media (min-width:520px) and (min-height:600px){
-  #screen > [id$="-app"]{zoom:.92;width:108.6957%;height:108.6957%;}
-}
-
-
-/* 상태바도 앱 화면과 같은 비율로 축소: 시각적 중심을 유지 */
-@media (min-width:520px) and (min-height:600px){
-  #statusbar{zoom:.92;width:108.6957%;right:auto;}
+  #screen > [id$="-app"]{
+    zoom:1 !important;
+    transform:scale(.92);
+    transform-origin:top left;
+    width:108.6957%;
+    height:108.6957%;
+  }
+  #statusbar{
+    zoom:1 !important;
+    transform:scale(.92);
+    transform-origin:top left;
+    width:108.6957%;
+    right:auto;
+  }
 }
