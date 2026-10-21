@@ -327,6 +327,30 @@ window.addEventListener('ssa-scheduled-updated',()=>{
 })();
 
 
+/* ===== Sentinel profile detail renderer ===== */
+(function(){
+ const box=document.getElementById('sentinelProfileContent');
+ function render(){
+  if(!box)return;
+  const X=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const id=Number(new URLSearchParams(location.hash.split('?')[1]||'').get('id'));
+  const rows=[...document.querySelectorAll('.sentinel-row')];
+  const r=rows[id];
+  if(!r){box.innerHTML='<div class="notice-area">센티넬 정보를 찾을 수 없습니다.</div>';return;}
+  const data=window.__sentinelData?.[id]||{};
+  const name=r.querySelector('.sentinel-info strong')?.textContent.trim()||data.name||'-';
+  const dd=[...r.querySelectorAll('.sentinel-info dd')].map(x=>x.textContent.trim());
+  const age=data.age||dd[0]||'-',gender=data.gender||dd[1]||'-',center=data.center||dd[2]||'-',grade=data.grade||dd[3]||'-';
+  const type=data.type||'미상',status=data.status||'등록·운용',joined=data.joined||'-';
+  const row=(k,v)=>'<div><span>'+k+'</span><b>'+X(v)+'</b></div>';
+  box.innerHTML='<div class="sentinel-profile-head"><div class="sentinel-detail-photo">'+(r.querySelector('.sentinel-photo img')?.getAttribute('src')?'<img src="'+X(r.querySelector('.sentinel-photo img').getAttribute('src'))+'" alt="'+X(name)+' 사진">':'증명사진')+'</div><div><h2>'+X(name)+' <span class="sentinel-grade">'+X(grade)+'</span></h2><p>'+X(status)+'</p></div></div><div class="sentinel-profile-table">'
+   +row('이름',name)+row('나이',age)+row('성별',gender)+row('등급',grade)+row('소속 센터',center)+row('능력 유형',type)+row('등록 상태',status)+row('등록일',joined)
+   +'</div><a class="back-to-list" href="#sentinels">← 센티넬 목록으로</a>';
+  if(window.__profilePhoto)window.__profilePhoto();
+ }
+ addEventListener('hashchange',render);render();
+})();
+
 /* ===== bundled from js/apostles.js ===== */
 /* ===== ORIGINAL SCRIPT BLOCK 9 ===== */
 
