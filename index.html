@@ -68,6 +68,39 @@ header{position:relative}.main-nav{position:absolute;right:10px;top:42px;backgro
 .ab-q{font-size:22px;font-weight:800;color:#2a56a5;line-height:1.5;margin:24px 0}.ab-q span{font-size:30px;vertical-align:-6px}
 .ab-sign{display:flex;align-items:center;justify-content:flex-end;gap:12px;font-size:13px;margin:24px 0}.ab-sign i{font:italic 28px/1 cursive;margin-right:auto}.ab-sign b{font-size:19px;color:#1b2a4a;letter-spacing:2px}
 @media(max-width:768px){#about .page-layout{display:block}#about .side-nav{padding:0}#about .side-nav h2{background:#14284f;color:#fff;margin:0;padding:16px 18px;font-size:16px}#about .side-nav a{display:none}#about .breadcrumb{font-size:13px}#about .content-head h1{font-size:32px;font-weight:800}#about .content-head p{color:#777;font-size:16px}#about .article p{font-size:15px;line-height:1.75;color:#333;margin:0 0 16px}}</style>
+
+<style id="sentinel-mobile-home-indicator">
+@media (max-width: 768px) {
+  body { padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+  body::after {
+    content: "";
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(28px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+    background: #000;
+    pointer-events: none;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    z-index: 100000;
+    left: 50%;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    width: 108px;
+    height: 4px;
+    border-radius: 999px;
+    background: #fff;
+    pointer-events: none;
+  }
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#main">본문 바로가기</a><a class="skip" href="#nav">주메뉴 바로가기</a>
