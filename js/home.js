@@ -80,7 +80,7 @@ window.APPS = {
           void win.offsetWidth;
           win.classList.add("hwaho-launching");
           win.addEventListener("animationend", () => win.classList.remove("hwaho-launching"), { once: true });
-          win.querySelector("iframe")?.contentWindow?.location?.reload();
+          /* iframe을 매번 새로고침하지 않아 검색창 포커스와 키보드가 복원되는 현상을 방지 */
         }
         Home.current = id;
         try { localStorage.setItem(HOME_STATE_KEY, id); } catch (_) {}
