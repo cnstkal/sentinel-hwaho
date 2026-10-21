@@ -1193,3 +1193,22 @@ position:absolute;inset:0;z-index:8;overflow:hidden;background:var(--bg);color:v
     transform: none !important;
   }
 }
+
+
+/* Sentinel 청 앱: 상단 자체 제작 바 제거 후 하단 홈 인디케이터 유지 */
+#screen:has(#sentinel-site-window[style*="display: block"]) #home-indicator-zone {
+  z-index: 100;
+  left: 0;
+  right: 0;
+  transform: none;
+  width: 100%;
+  height: calc(28px + env(safe-area-inset-bottom, 0px));
+  bottom: 0;
+  background: #000;
+}
+#screen:has(#sentinel-site-window[style*="display: block"]) #home-indicator {
+  width: 108px;
+  height: 4px;
+  background: #fff;
+  box-shadow: none;
+}
