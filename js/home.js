@@ -13,7 +13,7 @@ window.APPS = {
   grid: [
     { id: "instagram", label: "Instagram", img: "images/app/Instagram/IMG_7148.png" },
     { id: "x", label: "X", img: "images/app/Twitter/IMG_7154.jpeg" },
-    { id: "sentinel-site", label: "센티넬청", img: "sentinel-site/sentinel-logo.svg" },
+    { id: "sentinel-site", label: "센티넬청", img: "images/app/Sentinel/sentinel-logo.svg" },
     { id: "naver", label: "네이버", img: "images/app/Naver/IMG_7151.png" },
     { id: "dcinside", label: "디시인사이드", img: "images/app/DCInside/IMG_7147.png" },
     { id: "youtube", label: "YouTube", img: "images/app/YouTube/IMG_7155.png" },
