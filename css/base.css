@@ -1174,3 +1174,9 @@ position:absolute;inset:0;z-index:8;overflow:hidden;background:var(--bg);color:v
 /* ===== 홈 화면 아이콘 크기 조정: 브라우저 100% 확대에서도 겹치지 않도록 ===== */
 :root{--icon:clamp(46px,13.4vw,58px);--side:clamp(16px,6.2vw,25px)}
 .grid{row-gap:clamp(12px,2.2vh,18px)}
+
+
+/* ===== 개별 앱 화면 전체 크기 조정: 데스크톱 브라우저 100%에서 과하게 커 보이는 현상 완화 ===== */
+@media (min-width:520px) and (min-height:600px){
+  #screen > [id$="-app"]{zoom:.92;width:108.6957%;height:108.6957%;}
+}
