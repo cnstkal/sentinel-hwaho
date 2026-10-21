@@ -992,6 +992,10 @@ html.pvo,html.pvo body,#screen:has(#pv.on),#pv.on{background:#000!important}
 #bm-app.hwaho-launching,
 #am-app.hwaho-launching,
 #notes-app.hwaho-launching,
+#sentinel-site-window.hwaho-launching {
+  animation: hwahoFrommStyleLaunch .38s cubic-bezier(.22,.8,.3,1) both !important;
+  transform-origin: center center;
+}
 #nt-app.hwaho-launching{animation:hwahoFrommStyleLaunch .38s cubic-bezier(.22,.8,.3,1) both !important;transform-origin:center center}
 /* 지피티 후속 질문 버튼 */
 .gp-fus{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
