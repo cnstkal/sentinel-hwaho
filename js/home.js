@@ -13,6 +13,7 @@ window.APPS = {
   grid: [
     { id: "instagram", label: "Instagram", img: "images/app/Instagram/IMG_7148.png" },
     { id: "x", label: "X", img: "images/app/Twitter/IMG_7154.jpeg" },
+    { id: "sentinel-site", label: "센티넬청", img: "sentinel-site/sentinel-logo.svg" },
     { id: "naver", label: "네이버", img: "images/app/Naver/IMG_7151.png" },
     { id: "dcinside", label: "디시인사이드", img: "images/app/DCInside/IMG_7147.png" },
     { id: "youtube", label: "YouTube", img: "images/app/YouTube/IMG_7155.png" },
@@ -58,19 +59,8 @@ window.APPS = {
   }
   // 에브리타임은 앱 데이터와 구현을 유지한 채 홈 화면에서만 숨김 처리합니다. 다시 활성화하려면 필터에서 every time 제외 조건을 제거하세요.
   const HIDDEN_HOME_APPS = new Set(["everytime"]);
-  /* 홈 위젯: 날씨(표시만) · 캘린더(누르면 캘린더 앱으로 이동). 2x2 크기로 맨 위에 놓임 */
-  const WX_ICON = `<svg class="wx-cloud" viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.6-9.96A6.5 6.5 0 0 1 19 9.5a4 4 0 0 1-.5 7.96z"/></svg>`;
-  const widgetsHtml = () => {
-    const d = new Date(), cd = new Date(2026, 9, 19), dow = ["일","월","화","수","목","금","토"];
-    /* D+ 위젯: 시작일 2023.03.01 부터 오늘까지 (당일 포함). 배경 사진은 비워 둠 */
-    const days = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2023, 3, 4)) / 864e5) + 1;
-    return `<div class="wgt-wrap"><div class="wgt wgt-dd" aria-label="내 강아지 ${days}일" style="background:linear-gradient(180deg,rgba(20,22,30,.22),rgba(20,22,30,.48)),url('images/app/PetWidget/8897d0ed31f5bd09bf7d95c1ed92995e.jpg?v=20261020-2') center/cover no-repeat"><div class="dd-top"><b>내 강아지</b><span>2023.04.04(화)</span></div><div class="dd-num">${days}일</div></div></div>` +
-      `<div class="wgt-wrap"><button class="wgt wgt-cal" id="wgt-cal" type="button" aria-label="캘린더 열기"><span class="cw-dow">${DOW[cd.getDay()]}</span><span class="cw-day">${cd.getDate()}</span><span class="cw-sch"><b>최종 녹음</b></span></button></div>`;
-  };
   const render = () => {
     renderApps(APPS.grid.filter(app => !HIDDEN_HOME_APPS.has(app.id)), $("#grid"));
-    $("#grid").insertAdjacentHTML("afterbegin", widgetsHtml());
-    $("#wgt-cal").addEventListener("click", () => Home.openApp("calendar"));
     renderApps(APPS.dock, $("#dock"));
   };
   render();
@@ -82,6 +72,13 @@ window.APPS = {
   const Home = {
     current: null,
     openApp(id) {
+      if (id === "sentinel-site") {
+        const win = document.getElementById("sentinel-site-window");
+        if (win) { win.style.display = "block"; win.querySelector("iframe")?.contentWindow?.location?.reload(); }
+        Home.current = id;
+        try { localStorage.setItem(HOME_STATE_KEY, id); } catch (_) {}
+        return;
+      }
       if (id === "naver" || id === "dcinside") {
         const url = id === "naver" ? "https://www.naver.com/" : "https://dcinside.com/";
         if (Home.current !== "safari") Home.openApp("safari");
@@ -109,6 +106,7 @@ window.APPS = {
     goHome() {
       if (closeTimer) return;
       const had = Home.current; Home.current = null;
+      const sentinelWin = document.getElementById("sentinel-site-window"); if (sentinelWin) sentinelWin.style.display = "none";
       try { localStorage.removeItem(HOME_STATE_KEY); } catch (_) {}
       document.dispatchEvent(new CustomEvent("app:close", { detail: { id: had } }));
       const h = $("#home");
